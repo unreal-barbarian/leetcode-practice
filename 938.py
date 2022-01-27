@@ -7,16 +7,34 @@
 class Solution:
     def rangeSumBST(self, root, low: int, high: int) -> int:
 
-        cum = 0
         queue = [root]
+        visited = [0]
+        cur = root
+        cum = 0
         while len(queue) > 0:
-            new_queue = []
-            for cur in queue:
-                if (cur.val - low) * (cur.val - high) <= 0:
-                    cum += cur.val
-                if cur.val > low and (cur.left is not None):
-                    new_queue.append(cur.left)
-                if cur.val < high and (cur.right is not None):
-                    new_queue.append(cur.right)
-            queue = new_queue
+            if visited[-1] == 0:
+                cum += cur.val if (cur.val - low) * (cur.val - high) <= 0 else 0
+            if visited[-1] == 2:
+                queue.pop()
+                visited.pop()
+                if len(queue) > 0:
+                    cur = queue[-1]
+                continue
+            if (cur.left is not None) and (visited[-1] == 0):
+                visited[-1] += 1
+                if cur.val > low:
+                    queue.append(cur.left)
+                    visited.append(0)
+                    cur = cur.left
+            elif (cur.right is not None):
+                visited[-1] += 1
+                if cur.val < high:
+                    visited.append(0)
+                    queue.append(cur.right)
+                    cur = cur.right
+            else:
+                queue.pop()
+                visited.pop()
+                if len(queue) > 0:
+                    cur = queue[-1]
         return cum
