@@ -4,6 +4,14 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+# Here I took a two stack solution, using a counter to mark the root node
+# counter == 0: first met
+# counter == 1: left branch has been traversed
+# counter == 2: right branch has been traversed, so
+
+# Though I didn't add numbers according to post order, actually they are added pre-order wised
+# Why? Because I actually implemented the routine to surround the tree, on the rounte, you can either get preorder, inorder or post order, your choice
 class Solution:
     def rangeSumBST(self, root, low: int, high: int) -> int:
 
