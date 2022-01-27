@@ -19,16 +19,19 @@ class Solution(object):
         if n == 0:
             return [tried]
         solution = []
-        for i in range(0 if len(tried) == 0 else tried[-1][0] + 1, self.n):
-            for j in col_set:
-                if not (i + j) in diag_set1 and not (i - j) in diag_set2:
-                    new_col_set = set(col_set)
-                    new_col_set.remove(j)
-                    new_diag_set1 = set(diag_set1)
-                    new_diag_set2 = set(diag_set2)
-                    new_diag_set1.add(i+j)
-                    new_diag_set2.add(i-j)
-                    solution += self.backtrack(n - 1, tried + [(i, j)], new_col_set, new_diag_set1, new_diag_set2)
+        # each row can have one and only one queen!
+        # If loop for all rows, it is not necessary and n times slower
+        i = 0 if len(tried) == 0 else tried[-1][0] + 1
+        # search for column only
+        for j in col_set:
+            if not (i + j) in diag_set1 and not (i - j) in diag_set2:
+                new_col_set = set(col_set)
+                new_col_set.remove(j)
+                new_diag_set1 = set(diag_set1)
+                new_diag_set2 = set(diag_set2)
+                new_diag_set1.add(i+j)
+                new_diag_set2.add(i-j)
+                solution += self.backtrack(n - 1, tried + [(i, j)], new_col_set, new_diag_set1, new_diag_set2)
         return solution
 
     def format_result(self):
