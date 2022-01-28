@@ -2,47 +2,48 @@ class Solution:
     def longestPalindrome(self, s: str) -> str:
         if len(s) == 0:
             return ''
-        rs = s[::-1]
-        is_same_before = False
-        rng1 = [0,1]
-        rng2 = [0,1]
+        n = len(s)
         answer = s[0]
-        longest_p = 0
-        l = len(s)
-        def overlap_range(x):
-            if x < 0:
-                return zip(range(l + x), range(-1 * x, l))
-            else:
-                return zip(range(x, l), range(l - x))
-
-        def common(rng1, rng2):
-            s1, s2 = rng1
-            r1, r2 = rng2
-            rs1, rs2 = l - r2, l - r1
-            return [max(s1, rs1), min(s2, rs2)]
-
-        for start in range(-1 * l + 1, l):
-            for i, j in overlap_range(start):
-                if s[i] == rs[j]:
-                    if is_same_before:
-                        rng1[1] += 1
-                        rng2[1] += 1
-                    else:
-                        is_same_before = True
-                        rng1 = [i, i + 1]
-                        rng2 = [j, j + 1]
+        longest_n = 1
+        for i in range(n):
+            if i == 1:
+                1+1
+            t_l = 1
+            l = r = i
+            while True:
+                l -= 1
+                r += 1
+                if l < 0 or r >= n:
+                    break
+                if s[l] == s[r]:
+                    t_l += 2
+                    if t_l > longest_n:
+                        answer = s[l: r + 1]
+                        longest_n = t_l
                 else:
-                    l1, l2 = common(rng1, rng2)
-                    if l2-l1 > longest_p:
-                        longest_p = l2 - l1
-                        answer = s[l1:l2]
-                    is_same_before = False
-            is_same_before = False
-            l1, l2 = common(rng1, rng2)
-            if l2 - l1 > longest_p:
-                longest_p = l2 - l1
-                answer = s[l1:l2]
+                    break
+
+        for i in range(1, n):
+            t_l = 0
+            l = i
+            r = i - 1
+            while True:
+                l -= 1
+                r += 1
+                if l < 0 or r >= n:
+                    break
+                if s[l] == s[r]:
+                    t_l += 2
+                    if t_l > longest_n:
+                        answer = s[l: r + 1]
+                        longest_n = t_l
+                else:
+                    break
         return answer
 
+
 a = Solution()
-print(a.longestPalindrome("mwwfjysbkebpdjyabcfkgprtxpwvhglddhmvaprcvrnuxifcrjpdgnktvmggmguiiquibmtviwjsqwtchkqgxqwljouunurcdtoeygdqmijdympcamawnlzsxucbpqtuwkjfqnzvvvigifyvymfhtppqamlgjozvebygkxawcbwtouaankxsjrteeijpuzbsfsjwxejtfrancoekxgfyangvzjkdskhssdjvkvdskjtiybqgsmpxmghvvicmjxqtxdowkjhmlnfcpbtwvtmjhnzntxyfxyinmqzivxkwigkondghzmbioelmepgfttczskvqfejfiibxjcuyevvpawybcvvxtxycrfbcnpvkzryrqujqaqhoagdmofgdcbhvlwgwmsmhomknbanvntspvvhvccedzzngdywuccxrnzbtchisdwsrfdqpcwknwqvalczznilujdrlevncdsyuhnpmheukottewtkuzhookcsvctsqwwdvfjxifpfsqxpmpwospndozcdbfhselfdltmpujlnhfzjcgnbgprvopxklmlgrlbldzpnkhvhkybpgtzipzotrgzkdrqntnuaqyaplcybqyvidwcfcuxinchretgvfaepmgilbrtxgqoddzyjmmupkjqcypdpfhpkhitfegickfszermqhkwmffdizeoprmnlzbjcwfnqyvmhtdekmfhqwaftlyydirjnojbrieutjhymfpflsfemkqsoewbojwluqdckmzixwxufrdpqnwvwpbavosnvjqxqbosctttxvsbmqpnolfmapywtpfaotzmyjwnd" ))
+print(a.longestPalindrome('ccc'))
+print(a.longestPalindrome('ababd'))
+print(a.longestPalindrome('abccba'))
+print(a.longestPalindrome("mwwfjysbkebpdjyabcfkgprtxpwvhglddhmvaprcvrnuxifcrjpdgnktvmggmguiiquibmtviwjsqwtchkqgxqwljouunurcdtoeygdqmijdympcamawnlzsxucbpqtuwkjfqnzvvvigifyvymfhtppqamlgjozvebygkxawcbwtouaankxsjrteeijpuzbsfsjwxejtfrancoekxgfyangvzjkdskhssdjvkvdskjtiybqgsmpxmghvvicmjxqtxdowkjhmlnfcpbtwvtmjhnzntxyfxyinmqzivxkwigkondghzmbioelmepgfttczskvqfejfiibxjcuyevvpawybcvvxtxycrfbcnpvkzryrqujqaqhoagdmofgdcbhvlwgwmsmhomknbanvntspvvhvccedzzngdywuccxrnzbtchisdwsrfdqpcwknwqvalczznilujdrlevncdsyuhnpmheukottewtkuzhookcsvctsqwwdvfjxifpfsqxpmpwospndozcdbfhselfdltmpujlnhfzjcgnbgprvopxklmlgrlbldzpnkhvhkybpgtzipzotrgzkdrqntnuaqyaplcybqyvidwcfcuxinchretgvfaepmgilbrtxgqoddzyjmmupkjqcypdpfhpkhitfegickfszermqhkwmffdizeoprmnlzbjcwfnqyvmhtdekmfhqwaftlyydirjnojbrieutjhymfpflsfemkqsoewbojwluqdckmzixwxufrdpqnwvwpbavosnvjqxqbosctttxvsbmqpnolfmapywtpfaotzmyjwnd"))
